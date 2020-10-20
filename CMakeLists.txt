@@ -11,12 +11,12 @@
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
 # and Eclipse Distribution License v1.0 which accompany this distribution.
-# 
+#
 # The Eclipse Public License is available at
 #   http://www.eclipse.org/legal/epl-v10.html
 # and the Eclipse Distribution License is available at
 #   http://www.eclipse.org/org/documents/edl-v10.php.
-# 
+#
 # Contributors:
 #   Guilherme Maciel Ferreira - initial version
 #   Frank Pagliughi
@@ -28,9 +28,18 @@
 cmake_minimum_required(VERSION 3.5)
 
 ## project name
-project("paho-mqtt-cpp" 
+project(paho_cpp
     VERSION "1.1.0"
     LANGUAGES CXX
+)
+find_package(catkin REQUIRED COMPONENTS paho_c)
+
+catkin_package(
+  INCLUDE_DIRS src
+  LIBRARIES paho-mqttpp3
+)
+include_directories(
+  src
 )
 
 ## --- Build options ---
@@ -111,6 +120,8 @@ elseif(UNIX)
 endif()
 
 include(CPack)
-add_subdirectory(cmake)
 
-
+install(DIRECTORY src/mqtt
+   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+   FILES_MATCHING PATTERN "*.h"
+)
